@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ADAM</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="stage">
+      <div id="orb" class="orb idle" aria-label="ADAM status"></div>
+      <p id="brand">ADAM</p>
+      <p id="state">idle</p>
+      <p id="hint">Mantén Ctrl+Alt+Space o el orbe · suelta para responder</p>
+      <section id="activity" class="activity hidden" aria-live="polite">
+        <div class="activity-head">
+          <span>ACTIVIDAD</span>
+          <span id="job-count">0</span>
+        </div>
+        <div id="jobs" class="jobs"></div>
+        <div id="integrations" class="integrations hidden"></div>
+        <div id="routines" class="integrations hidden"></div>
+        <p id="transcript" class="transcript"></p>
+      </section>
+      <div id="confirm" class="confirm hidden">
+        <p id="confirm-text">¿Confirmas?</p>
+        <div class="row">
+          <button id="yes">Sí</button>
+          <button id="no">No</button>
+        </div>
+      </div>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,211 @@
+name: ADAM
+language: es
+sample_rate: 16000
+
+identity:
+  short_name: ADAM
+  expansion_en: Automated Developer and Asset Manager
+  expansion_es: Desarrollador automatizado y gestor de activos
+  reveal_meaning_only_when_asked: true
+
+audio:
+  input_device: null
+  channels: 1
+  chunk_ms: 30
+  silence_ms: 1200
+  max_utterance_ms: 60000
+  wake_enabled: true
+  wake_phrases:
+    - "oye adam"
+    - "hey adam"
+    - "adam"
+  wake_sensitivity: 0.55
+  ptt_hotkey: "ctrl+alt+space"
+  barge_in: true
+
+stt:
+  provider: elevenlabs
+  model: tiny
+  eleven_model: scribe_v2
+  device: cpu
+  compute_type: int8
+  language: es
+
+brain:
+  model: kimi-k2.6
+  base_url: https://api.moonshot.ai/v1
+  temperature: 1.0
+  max_tokens: 2048
+  max_tool_rounds: 8
+  thinking: false
+
+voice:
+  model_id: eleven_multilingual_v2
+  stability: 0.45
+  similarity_boost: 0.75
+  style: 0.15
+  speak_progress: true
+
+hud:
+  ws_host: 127.0.0.1
+  ws_port: 8765
+  autostart: true
+
+memory:
+  sqlite_path: data/aether.db
+  chroma_path: data/chroma
+  embed_collection: aether_semantic
+  session_turns: 40
+  user_name: Luisfer
+  address_as: Luisfer
+  facts_collection: adam_facts
+  fact_limit_recall: 12
+  consolidation_interval_h: 24
+  max_facts: 5000
+
+supervisor:
+  max_concurrent_jobs: 4
+  default_timeout_s: 120
+  delegated_timeout_s: 1800
+  inline_max_s: 15
+  background_by_default: true
+  recover_stale_running_s: 60
+  progress_throttle_ms: 750
+  verify_after_cursor: true
+  default_verify_command: ""
+
+policy:
+  trusted_mode: true
+  default_level: L0
+  require_oral_confirm_for: []
+  always_confirm_tools:
+    - mail.send
+    - gmail.send
+    - gmail.delete
+    - calendar.delete_event_google
+    - calendar.publish_event
+    - browser.drive_upload
+    - drive.share
+    - messaging.send_telegram
+    - messaging.send_whatsapp
+    - messaging.delete_message
+    - fs.trash
+    - files.trash
+    - files.restore
+    - backup.restore
+    - commerce.checkout
+  always_deny_tools:
+    - system.shutdown
+    - system.format
+  critical_entity_prefixes:
+    - "lock."
+    - "alarm_control_panel."
+  max_visual_actions_per_minute: 30
+  blocked_patterns:
+    - "(?i)password\\s*="
+    - "(?i)api[_-]?key"
+  app_whitelist:
+    - notepad
+    - calc
+    - explorer
+    - chrome
+    - msedge
+    - firefox
+    - code
+    - cursor
+    - windows terminal
+    - wt
+    - powershell
+    - cmd
+  path_whitelist:
+    - "~\\Documents"
+    - "~\\Downloads"
+    - "~\\Desktop"
+    - "~"
+
+capabilities:
+  desktop_win: true
+  dev_tools: true
+  browser: true
+  iot_home: true
+  calendar_mail: true
+  screen_camera: true
+  files_intel: true
+  backup: true
+  health: true
+  scheduler: true
+  messaging: true
+  integrations: true
+
+iot:
+  home_assistant_url: ""
+  home_assistant_token: ""
+  mqtt_url: ""
+  critical_entities: []
+
+calendar_mail:
+  provider: google
+  google_token_path: data/google_tokens.json
+
+browser:
+  headless: false
+  timeout_ms: 30000
+  channel: chrome
+  user_data_dir: data/browser_profile
+  profile_directory: Default
+
+vision:
+  default_monitor: 1
+  max_width: 1280
+  max_height: 720
+  captures_dir: data/captures
+  capture_ttl_h: 24
+  grounding_min_confidence: 0.6
+  settle_ms: 600
+
+files:
+  index_roots:
+    - "~/Documents"
+    - "~/Downloads"
+    - "~/Desktop"
+  exclude_globs:
+    - "**/.git/**"
+    - "**/node_modules/**"
+    - "**/.venv/**"
+  max_index_files: 50000
+  max_depth: 8
+  duplicate_min_size_mb: 1
+  trash_dir: data/trash
+
+backup:
+  default_dest: data/backups
+  max_parallel: 1
+  max_set_size_gb: 50
+  retention_days: 30
+  verify_after_write: true
+
+scheduler:
+  tick_seconds: 30
+  max_missed_catchup: 3
+  routine_timeout_s: 600
+  timezone: America/Bogota
+
+health:
+  sample_interval_s: 300
+  retain_snapshots_days: 30
+  disks:
+    - "C:\\"
+  cpu_warn_percent: 85
+  memory_warn_percent: 80
+  disk_free_warn_gb: 15
+  alert_cooldown_s: 3600
+
+google:
+  token_path: data/google_tokens.json
+  redirect_uri: http://127.0.0.1:8766/
+
+spotify:
+  redirect_uri: http://127.0.0.1:8080/
+  token_path: data/spotify_tokens.json
+
+messaging: {}

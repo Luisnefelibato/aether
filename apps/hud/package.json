@@ -1,0 +1,14 @@
+{
+  "name": "adam-hud",
+  "version": "0.1.0",
+  "private": true,
+  "description": "ADAM voice HUD overlay",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron ."
+  },
+  "dependencies": {
+    "electron": "^33.2.0"
+  }
+}
